@@ -1,0 +1,16 @@
+{
+  "name": "@namchee/remov",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1",
+    "yargs": "^17.1.0"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Uninstall Node modules by regex patterns",
+  "main": "./bin/index.js",
+  "repository": "git@github.com:Namchee/purger.git",
+  "author": "Cristopher <cristophernamchee12@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
