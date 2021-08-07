@@ -6,8 +6,7 @@ import chalk from 'chalk';
 
 import { hideBin } from 'yargs/helpers';
 import { existsSync, readFileSync } from 'fs';
-import { resolve } from 'path';
-import { spawnSync } from 'child_process';
+import { execSync } from 'child_process';
 
 const argv = yargs(hideBin(process.argv))
   .scriptName('remov')
@@ -70,16 +69,19 @@ const argv = yargs(hideBin(process.argv))
       `📦 There are ${target.length} packages that matches the criteria`
     ));
   } else if (target.length) {
-    const isNpm = existsSync(resolve(cwd, 'package-lock.json'));
-    const isYarn = existsSync(resolve(cwd, 'yarn.lock'));
-    const isPnpm = existsSync(resolve(cwd, 'pnpm-lock.yaml'));
+    const isNpm = existsSync(new URL('./package-lock.json', import.meta.url));
+    const isYarn = existsSync(new URL('./yarn.lock', import.meta.url));
+    const isPnpm = existsSync(new URL('./pnpm-lock.yaml', import.meta.url));
 
     const cmd = isNpm || (!isYarn && !isPnpm) ?
-      /^win/.test(process.platform) ? 'npm.cmd' : 'npm' :
+      'npm' :
       isYarn ? 'yarn' : 'pnpm';
 
     spinner.text = chalk.greenBright(`Uninstalled ${target.length} packages...`);
-    spawnSync(cmd, 'remove', target.join(' '));
+    execSync(
+      `${cmd}${/^win/.test(process.platform) ? '.cmd' : ''} remove ${target.join(' ')} ${global ? '-g' : ''}`,
+      { stdio: 'inherit' },
+    );
     spinner.succeed(chalk.greenBright(`Successfully uninstalled ${target.length} packages`));
   }
 
