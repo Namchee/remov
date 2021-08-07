@@ -4,11 +4,12 @@ import ora from 'ora';
 import yargs from 'yargs';
 import chalk from 'chalk';
 
-import { existsSync } from 'fs';
+import { hideBin } from 'yargs/helpers';
+import { existsSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import { spawnSync } from 'child_process';
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
   .scriptName('remov')
   .usage('Usage: $0 <pattern>')
   .positional('pattern', {
@@ -34,11 +35,13 @@ const argv = yargs
   .help()
   .parseSync();
 
-(() => {
+(async () => {
   const spinner = ora(
     chalk.greenBright('Analyzing project definition...'),
   ).start();
-  const path = resolve(process.cwd(), 'package.json');
+  const path = new URL('./package.json', import.meta.url);
+
+  console.log(path);
 
   if (!existsSync(path)) {
     spinner.fail(
@@ -52,7 +55,8 @@ const argv = yargs
   const { pattern, dry } = argv;
   const regex = new RegExp(pattern);
 
-  const packageDef = require(path);
+  const packageDef = JSON.parse(readFileSync(path));
+  console.log(packageDef);
   const { dependencies, devDependencies, peerDependencies } = packageDef;
   const target = [
     ...Object.keys(dependencies).filter(n => regex.test(n)),

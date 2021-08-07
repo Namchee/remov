@@ -1,16 +1,29 @@
 {
   "name": "@namchee/remov",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Uninstall Node modules by regex patterns",
+  "repository": "git@github.com:Namchee/remov.git",
+  "scripts": {
+    "fuck": "node ./index.js rollup --dry"
+  },
+  "author": {
+    "name": "Cristopher Namchee",
+    "email": "cristophernamchee12@gmail.com"
+  },
+  "bin": {
+    "remov": "node ./index.js"
+  },
   "dependencies": {
     "chalk": "^4.1.2",
     "ora": "^5.4.1",
     "yargs": "^17.1.0"
   },
-  "type": "module",
-  "version": "1.0.0",
-  "description": "Uninstall Node modules by regex patterns",
-  "main": "./bin/index.js",
-  "repository": "git@github.com:Namchee/purger.git",
-  "author": "Cristopher <cristophernamchee12@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "rollup": "^2.56.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0"
+  }
 }
