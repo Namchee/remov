@@ -1,7 +1,7 @@
 {
   "name": "@namchee/remov",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Uninstall Node modules by regex patterns",
   "repository": "git@github.com:Namchee/remov.git",
   "author": {
