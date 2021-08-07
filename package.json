@@ -5,7 +5,7 @@
   "description": "Uninstall Node modules by regex patterns",
   "repository": "git@github.com:Namchee/remov.git",
   "scripts": {
-    "fuck": "node ./index.js rollup --dry"
+    "fuck": "node ./index.js rollup-.+ --dry"
   },
   "author": {
     "name": "Cristopher Namchee",

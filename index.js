@@ -12,6 +12,10 @@ import { spawnSync } from 'child_process';
 const argv = yargs(hideBin(process.argv))
   .scriptName('remov')
   .usage('Usage: $0 <pattern>')
+  .command(
+    '$0 <pattern>',
+    'Uninstall all packages that matches the provided pattern',
+  )
   .positional('pattern', {
     type: 'string',
     description: 'Package pattern',
@@ -32,7 +36,6 @@ const argv = yargs(hideBin(process.argv))
       demandOption: false,
     }
   })
-  .help()
   .parseSync();
 
 (async () => {
@@ -40,8 +43,6 @@ const argv = yargs(hideBin(process.argv))
     chalk.greenBright('Analyzing project definition...'),
   ).start();
   const path = new URL('./package.json', import.meta.url);
-
-  console.log(path);
 
   if (!existsSync(path)) {
     spinner.fail(
@@ -52,16 +53,15 @@ const argv = yargs(hideBin(process.argv))
 
   spinner.text = chalk.greenBright('Getting matching packages...');
 
-  const { pattern, dry } = argv;
+  const { pattern, global, dry } = argv;
   const regex = new RegExp(pattern);
 
   const packageDef = JSON.parse(readFileSync(path));
-  console.log(packageDef);
   const { dependencies, devDependencies, peerDependencies } = packageDef;
   const target = [
-    ...Object.keys(dependencies).filter(n => regex.test(n)),
-    ...Object.keys(devDependencies).filter(n => regex.test(n)),
-    ...Object.keys(peerDependencies).filter(n => regex.test(n)),
+    ...Object.keys(dependencies || {}).filter(n => regex.test(n)),
+    ...Object.keys(devDependencies || {}).filter(n => regex.test(n)),
+    ...Object.keys(peerDependencies || {}).filter(n => regex.test(n)),
   ];
 
   if (dry) {
@@ -85,7 +85,7 @@ const argv = yargs(hideBin(process.argv))
 
   if (target.length) {
     target.forEach((name) => {
-      console.log(chalk.greenBright(` └── ${name}`));
+      console.log(chalk.cyanBright(` └── ${name}`));
     });
   }
 })();
