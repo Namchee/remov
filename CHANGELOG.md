@@ -1,3 +1,16 @@
+# v1.0.2 (Sun Aug 08 2021)
+
+#### ⚠️ Pushed to `master`
+
+- Merge branch 'master' of github.com:Namchee/purger ([@Namchee](https://github.com/Namchee))
+- :ambulance: fix: Revert back to path resolve instead URL constructor ([@Namchee](https://github.com/Namchee))
+
+#### Authors: 1
+
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.0.1 (Sat Aug 07 2021)
 
 #### ⚠️ Pushed to `master`
