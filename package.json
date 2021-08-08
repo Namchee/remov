@@ -26,5 +26,8 @@
     "@auto-it/conventional-commits": "^10.30.0",
     "@auto-it/npm": "^10.30.0",
     "auto": "^10.30.0"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   }
 }
