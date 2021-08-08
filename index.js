@@ -5,6 +5,7 @@ import yargs from 'yargs';
 import chalk from 'chalk';
 
 import { hideBin } from 'yargs/helpers';
+import { resolve } from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { execSync } from 'child_process';
 
@@ -41,7 +42,7 @@ const argv = yargs(hideBin(process.argv))
   const spinner = ora(
     chalk.greenBright('Analyzing project definition...'),
   ).start();
-  const path = new URL('./package.json', import.meta.url);
+  const path = resolve(process.cwd(), 'package.json');
 
   if (!existsSync(path)) {
     spinner.fail(
